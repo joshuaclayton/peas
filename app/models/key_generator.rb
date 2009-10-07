@@ -1,6 +1,6 @@
 class KeyGenerator
   def self.generate(unique_id)
-    unique_id =- 1
+    unique_id -= 1
     available = []
     available << ("A".."Z").map
     available << ("a".."z").map
