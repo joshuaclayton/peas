@@ -1,5 +1,4 @@
-<form method="get">
-  <label for="url">Enter your long URL</label>
-  <input type="text" id="url" name="url" placeholder="url" value="" />
-  <input type="submit" value="Shorten">
-</form>
+<% form_for Pea.new do |form| %>
+  <%= render :partial => "peas/form", :locals => {:form => form} %>
+  <%= form.submit "Shorten" %>
+<% end %>
