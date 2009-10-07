@@ -175,6 +175,10 @@ Then /^the "([^\"]*)" checkbox should not be checked$/ do |label|
   field_labeled(label).should_not be_checked
 end
 
+Then /^I should see a field labeled "([^\"]*)"$/ do |label|
+  assert field_labeled(label)
+end
+
 Then /^I should be on (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
 end

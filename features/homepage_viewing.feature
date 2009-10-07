@@ -6,3 +6,4 @@ Feature: View the homepage
   Scenario: View the homepage
     When I go to the homepage
     Then I should see "Peas"
+    And I should see a field labeled "Enter your long URL"
