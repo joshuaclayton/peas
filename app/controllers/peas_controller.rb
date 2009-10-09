@@ -1,6 +1,18 @@
 class PeasController < InheritedResources::Base
-  respond_to :html
+  respond_to :html, :xml, :json
   actions :create, :show
+
+  def show
+    show! do |format|
+      @short_url = peapod_url(:pea_key => @pea.key)
+      format.json do
+        render :json => {
+          :long_url => @pea.long_url,
+          :short_url => @short_url
+        }
+      end
+    end
+  end
 
   def create
     if (pea = Pea.find_by_long_url(params[:pea][:long_url]))
