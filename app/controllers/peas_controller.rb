@@ -23,6 +23,6 @@ class PeasController < InheritedResources::Base
 
   def redir
     pea = Pea.find_by_key(params[:pea_key])
-    redirect_to(pea ? pea.long_url : root_path)
+    redirect_to(pea && pea.long_url != peapod_url(pea.key) ? pea.long_url : root_path)
   end
 end

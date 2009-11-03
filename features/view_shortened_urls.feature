@@ -14,3 +14,8 @@ Feature: View shortened URLs
     And the pea for "http://www.google.com" has the key "abc"
     When I visit the short URL for "abcd"
     Then I should be on the homepage
+
+  Scenario: Visit a self-referential URL
+    Given a pea exists that refers to itself with key "abc"
+    When I visit the short URL for "abc"
+    Then I should be on the homepage
