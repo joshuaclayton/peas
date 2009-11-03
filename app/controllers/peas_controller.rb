@@ -18,7 +18,9 @@ class PeasController < InheritedResources::Base
     if (pea = Pea.find_by_long_url(params[:pea][:long_url]))
       return redirect_to(pea_path(pea))
     end
-    create!
+    create! do |success, failure|
+      failure.html { redirect_to root_path }
+    end
   end
 
   def redir

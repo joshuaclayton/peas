@@ -17,3 +17,9 @@ Feature: Generate shortened URLs
     And I press "Shorten"
     Then I should see "http://www.google.com was shortened to:"
     And I should see a short URL for "http://www.google.com"
+
+  Scenario: Shorten an empty string
+    When I go to the homepage
+    And I fill in "Enter your long URL" with ""
+    And I press "Shorten"
+    Then I should be on the homepage
