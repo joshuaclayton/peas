@@ -1,0 +1,7 @@
+h1. Peas
+
+h2. Like testing? We're as alike as two peas in a pod!
+
+This is a simple application to demonstrate Cucumber and how to write scenarios and step definitions.
+
+I understand that there are a ton of URL shorteners out there; this was built as a demonstration during a "Boston Ruby Group":http://bostonrb.org/ meetup.
