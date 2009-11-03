@@ -1,0 +1,79 @@
+body {
+  text-align: center;
+  background-color: #bada55;
+  font-family: Georgia, times, serif;
+  text-align: center;
+  margin: 32px 0 0;
+  padding: 0;
+  color: #333;
+}
+.content { margin: 0 auto; width: 660px; text-align: left; padding:50px 0 0 0; }
+h1, h2 { margin:0; font-weight: normal; }
+h1 { font-size: 90px; margin-bottom: 10px; }
+h2 { font-size: 30px; margin: 0 0 5px 0; }
+p { margin: 5px 0; }
+pre { display: inline; }
+code { display: inline; font-size: 12px; }
+strong { font-weight: normal; color: #000; font-style: italic; }
+ul, li { margin: 0 0 7px 10px; padding: 0; }
+ul li label { font-weight: bold; font-family: Monaco, Courier, mono-spaced; font-size: 18px; }
+ul li em { font-style: normal; font-size: 11px; color: #555; }
+ul li ul, ul li ul li ul { list-style-type: disc; }
+.numbered { list-style-type: decimal; }
+hr.space { visibility: hidden }
+.right { text-align: right; width: 670px; }
+.bottom { position: absolute; bottom: 10px; width: 670px; }
+span { display: block; margin: 16px 0 0; font-size: 9px; color: #999; }
+span code { font-size: 10px; }
+span.fancy { font-size:12px; color:#333; font-style: italic; display: inline; font-family: Baskerville, "Warnock Pro", "Goudy Old Style", "Palatino", "Book Antiqua", Georgia, serif; }
+#pea_long_url { width:555px; }
+#result { width:100%; }
+a { text-decoration: none; color: #333 }
+a:hover { text-decoration: underline; }
+h1 a:hover { text-decoration: none; }
+a.button {
+  font-family: Helvetica, sans-serif;
+  font-size: 9px;
+  line-height: 10px;
+  height: 10px;
+  padding: 5px;
+  position: relative;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+  text-decoration: none;
+  color: #fff;
+  background-color: #333;
+}
+input[type=text] {
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: none;
+  padding: 4px;
+  font-size: 34px;
+  padding: 6px;
+  margin: 0;
+}
+#pea_long_url { color: #999; }
+#pea_long_url:focus { color: #000; }
+input[type=submit] {
+  position: absolute;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  padding: 15px 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  margin: 0 0 0 7px;
+}
+#new_pea label { display: block; padding-bottom: .5em; }
+.footer { text-align: right; font-size: .8em; margin: 20px 0 0 0; padding: 3px 0 0 0; }
