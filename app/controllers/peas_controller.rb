@@ -4,11 +4,13 @@ class PeasController < InheritedResources::Base
 
   def show
     show! do |format|
-      @short_url = peapod_url(:pea_key => @pea.key)
+      @short_url = peapod_url(@pea.key)
       format.json do
         render :json => {
-          :long_url => @pea.long_url,
-          :short_url => @short_url
+          :pea => {
+            :long_url => @pea.long_url,
+            :short_url => @short_url
+          }
         }
       end
     end
