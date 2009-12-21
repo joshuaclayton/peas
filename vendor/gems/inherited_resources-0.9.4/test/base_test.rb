@@ -53,7 +53,7 @@ end
 class ShowActionBaseTest < ActionController::TestCase
   include UserTestHelper
 
-  def test_expose_the_resquested_user
+  def test_expose_the_requested_user
     User.expects(:find).with('42').returns(mock_user)
     get :show, :id => '42'
     assert_equal mock_user, assigns(:user)
@@ -105,7 +105,7 @@ end
 class EditActionBaseTest < ActionController::TestCase
   include UserTestHelper
 
-  def test_expose_the_resquested_user
+  def test_expose_the_requested_user
     User.expects(:find).with('42').returns(mock_user)
     get :edit, :id => '42'
     assert_response :success
@@ -146,7 +146,7 @@ class CreateActionBaseTest < ActionController::TestCase
     User.stubs(:new).returns(mock_user(:save => false, :errors => {:some => :error}))
     post :create
     assert_response :success
-    assert_template :new
+    assert_equal "New HTML", @response.body.strip
   end
 
   def test_dont_show_flash_message_when_user_cannot_be_saved
@@ -183,7 +183,7 @@ class UpdateActionBaseTest < ActionController::TestCase
     User.stubs(:find).returns(mock_user(:update_attributes => false, :errors => {:some => :error}))
     put :update
     assert_response :success
-    assert_template :edit
+    assert_equal "Edit HTML", @response.body.strip
   end
 
   def test_dont_show_flash_message_when_user_cannot_be_saved
@@ -196,21 +196,34 @@ end
 class DestroyActionBaseTest < ActionController::TestCase
   include UserTestHelper
   
-  def test_the_resquested_user_is_destroyed
+  def test_the_requested_user_is_destroyed
     User.expects(:find).with('42').returns(mock_user)
-    mock_user.expects(:destroy)
+    mock_user.expects(:destroy).returns(true)
     delete :destroy, :id => '42'
     assert_equal mock_user, assigns(:user)
   end
 
-  def test_show_flash_message
+  def test_show_flash_message_when_user_can_be_deleted
     User.stubs(:find).returns(mock_user(:destroy => true))
     delete :destroy
     assert_equal flash[:notice], 'User was successfully destroyed.'
   end
 
+  def test_show_flash_message_when_cannot_be_deleted
+    User.stubs(:find).returns(mock_user(:destroy => false))
+    delete :destroy
+    assert_equal flash[:error], 'User could not be destroyed.'
+  end
+
   def test_redirects_to_users_list
     User.stubs(:find).returns(mock_user(:destroy => true))
+    @controller.expects(:collection_url).returns('http://test.host/')
+    delete :destroy
+    assert_redirected_to 'http://test.host/'
+  end
+
+  def test_redirects_to_the_resource_if_cannot_be_destroyed
+    User.stubs(:find).returns(mock_user(:destroy => false))
     @controller.expects(:collection_url).returns('http://test.host/')
     delete :destroy
     assert_redirected_to 'http://test.host/'

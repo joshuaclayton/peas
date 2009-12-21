@@ -30,12 +30,12 @@ module InheritedResources
     def create(options={}, &block)
       object = build_resource
 
-      if object.save
-        set_flash_message!(:notice, '{{resource_name}} was successfully created.')
+      if create_resource(object)
+        set_flash_message!(:success, '{{resource_name}} was successfully created.')
         options[:location] ||= resource_url rescue nil
         respond_with_dual_blocks(object, options, true, block)
       else
-        set_flash_message!(:error)
+        set_flash_message!(:failure)
         respond_with_dual_blocks(object, options, false, block)
       end
     end
@@ -45,12 +45,12 @@ module InheritedResources
     def update(options={}, &block)
       object = resource
 
-      if object.update_attributes(params[resource_instance_name])
-        set_flash_message!(:notice, '{{resource_name}} was successfully updated.')
+      if update_resource(object, params[resource_instance_name])
+        set_flash_message!(:success, '{{resource_name}} was successfully updated.')
         options[:location] ||= resource_url rescue nil
         respond_with_dual_blocks(object, options, true, block)
       else
-        set_flash_message!(:error)
+        set_flash_message!(:failure)
         respond_with_dual_blocks(object, options, false, block)
       end
     end
@@ -59,11 +59,15 @@ module InheritedResources
     # DELETE /resources/1
     def destroy(options={}, &block)
       object = resource
-      object.destroy
-
-      set_flash_message!(:notice, '{{resource_name}} was successfully destroyed.')
       options[:location] ||= collection_url rescue nil
-      respond_with_dual_blocks(object, options, nil, block)
+
+      if destroy_resource(object)
+        set_flash_message!(:success, '{{resource_name}} was successfully destroyed.')
+        respond_with_dual_blocks(object, options, true, block)
+      else
+        set_flash_message!(:failure, '{{resource_name}} could not be destroyed.')
+        respond_with_dual_blocks(object, options, false, block)
+      end
     end
     alias :destroy! :destroy
 
@@ -72,3 +76,4 @@ module InheritedResources
 
   end
 end
+

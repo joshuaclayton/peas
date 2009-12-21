@@ -49,6 +49,43 @@ module InheritedResources
         get_resource_ivar || set_resource_ivar(end_of_association_chain.send(method_for_build, params[resource_instance_name] || {}))
       end
 
+      # Responsible for saving the resource on :create method. Overwriting this
+      # allow you to control the way resource is saved. Let's say you have a
+      # PassworsController who is responsible for finding an user by email and
+      # sent password instructions for him. Instead of overwriting the entire
+      # :create method, you could do something:
+      #
+      #   def create_resource(object)
+      #     object.send_instructions_by_email
+      #   end
+      #
+      def create_resource(object)
+        object.save
+      end
+
+      # Responsible for updating the resource in :update method. This allow you
+      # to handle how the resource is gona be updated, let's say in a different
+      # way then the usual :update_attributes:
+      #
+      #   def update_resource(object, attributes)
+      #     object.reset_password!(attributes)
+      #   end
+      #
+      def update_resource(object, attributes)
+        object.update_attributes(attributes)
+      end
+
+      # Handle the :destroy method for the resource. Overwrite it to call your
+      # own method for destroing the resource, as:
+      #
+      #   def destroy_resource(object)
+      #     object.cancel
+      #   end
+      #
+      def destroy_resource(object)
+        object.destroy
+      end
+
       # This class allows you to set a instance variable to begin your
       # association chain. For example, usually your projects belongs to users
       # and that means that they belong to the current logged in user. So you
@@ -189,8 +226,8 @@ module InheritedResources
       #   flash.cars.create.status
       #   flash.actions.create.status
       #
-      # The statuses can be :notice (when the object can be created, updated
-      # or destroyed with success) or :error (when the objecy cannot be created
+      # The statuses can be :success (when the object can be created, updated
+      # or destroyed with success) or :failure (when the objecy cannot be created
       # or updated).
       #
       # Those messages are interpolated by using the resource class human name.
@@ -199,7 +236,7 @@ module InheritedResources
       #   flash:
       #     actions:
       #       create:
-      #         notice: "Hooray! {{resource_name}} was successfully created!"
+      #         success: "Hooray! {{resource_name}} was successfully created!"
       #
       # But sometimes, flash messages are not that simple. Going back
       # to cars example, you might want to say the brand of the car when it's
@@ -208,7 +245,7 @@ module InheritedResources
       #   flash:
       #     cars:
       #       update:
-      #         notice: "Hooray! You just tuned your {{car_brand}}!"
+      #         success: "Hooray! You just tuned your {{car_brand}}!"
       #
       # Since :car_name is not available for interpolation by default, you have
       # to overwrite interpolation_options.
@@ -229,14 +266,14 @@ module InheritedResources
       #   flash.cars.create.status
       #   flash.actions.create.status
       #
-      def set_flash_message!(status, default_message=nil)
+      def orig_set_flash_message!(status, default_message=nil)
         return flash[status] = default_message unless defined?(::I18n)
 
         resource_name = if resource_class
           if resource_class.respond_to?(:human_name)
             resource_class.human_name
           else
-            resource_class.name.humanize
+            resource_class.name.underscore.humanize
           end
         else
           "Resource"
@@ -267,6 +304,29 @@ module InheritedResources
 
         message = ::I18n.t options[:default].shift, options
         flash[status] = message unless message.blank?
+      end
+
+      def set_flash_message!(status, default_message=nil)
+        return orig_set_flash_message!(status, default_message) if defined?(DO_NOT_SET_DEPRECATED_FLASH)
+
+        fallback = status == :success ? :notice : :error
+        result   = orig_set_flash_message!(status)
+
+        if result.blank?
+          result = orig_set_flash_message!(fallback)
+
+          if result.blank?
+            result = orig_set_flash_message!(status, default_message) if default_message
+          else
+            ActiveSupport::Deprecation.warn "Using :#{fallback} in I18n with InheritedResources is deprecated, please use :#{status} instead"
+          end
+        end
+
+        unless result.blank?
+          flash[status]   = result
+          flash[fallback] = ActiveSupport::Deprecation::DeprecatedObjectProxy.new result, "Accessing :#{fallback} in flash with InheritedResources is deprecated, please use :#{status} instead"
+          result
+        end
       end
 
       # Used to allow to specify success and failure within just one block:
@@ -323,3 +383,4 @@ module InheritedResources
 
   end
 end
+

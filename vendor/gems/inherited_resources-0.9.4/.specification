@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
-name: josevalim-inherited_resources
+name: inherited_resources
 version: !ruby/object:Gem::Version 
-  version: 0.9.1
+  version: 0.9.4
 platform: ruby
 authors: 
 - "Jos\xC3\xA9 Valim"
@@ -9,7 +9,7 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2009-09-01 00:00:00 -04:00
+date: 2009-12-11 00:00:00 -05:00
 default_executable: 
 dependencies: []
 
@@ -26,7 +26,6 @@ files:
 - MIT-LICENSE
 - README.rdoc
 - Rakefile
-- VERSION
 - lib/inherited_resources.rb
 - lib/inherited_resources/actions.rb
 - lib/inherited_resources/base.rb
@@ -41,23 +40,25 @@ files:
 - lib/inherited_resources/polymorphic_helpers.rb
 - lib/inherited_resources/singleton_helpers.rb
 - lib/inherited_resources/url_helpers.rb
-- test/respond_to_test.rb
-- test/customized_belongs_to_test.rb
-- test/nested_belongs_to_test.rb
-- test/base_test.rb
-- test/redirect_to_test.rb
-- test/has_scope_test.rb
-- test/class_methods_test.rb
-- test/association_chain_test.rb
+- lib/inherited_resources/version.rb
 - test/aliases_test.rb
-- test/flash_test.rb
-- test/url_helpers_test.rb
+- test/association_chain_test.rb
+- test/base_test.rb
 - test/belongs_to_test.rb
-- test/polymorphic_test.rb
+- test/class_methods_test.rb
+- test/customized_base_test.rb
+- test/customized_belongs_to_test.rb
 - test/defaults_test.rb
-- test/singleton_test.rb
+- test/flash_test.rb
+- test/has_scope_test.rb
+- test/nested_belongs_to_test.rb
 - test/optional_belongs_to_test.rb
+- test/polymorphic_test.rb
+- test/redirect_to_test.rb
+- test/respond_to_test.rb
+- test/singleton_test.rb
 - test/test_helper.rb
+- test/url_helpers_test.rb
 has_rdoc: true
 homepage: http://github.com/josevalim/inherited_resources
 licenses: []
@@ -87,20 +88,21 @@ signing_key:
 specification_version: 3
 summary: Inherited Resources speeds up development by making your controllers inherit all restful actions so you just have to focus on what is important.
 test_files: 
-- test/respond_to_test.rb
-- test/customized_belongs_to_test.rb
-- test/nested_belongs_to_test.rb
-- test/base_test.rb
-- test/redirect_to_test.rb
-- test/has_scope_test.rb
-- test/class_methods_test.rb
-- test/association_chain_test.rb
 - test/aliases_test.rb
-- test/flash_test.rb
-- test/url_helpers_test.rb
+- test/association_chain_test.rb
+- test/base_test.rb
 - test/belongs_to_test.rb
-- test/polymorphic_test.rb
+- test/class_methods_test.rb
+- test/customized_base_test.rb
+- test/customized_belongs_to_test.rb
 - test/defaults_test.rb
-- test/singleton_test.rb
+- test/flash_test.rb
+- test/has_scope_test.rb
+- test/nested_belongs_to_test.rb
 - test/optional_belongs_to_test.rb
+- test/polymorphic_test.rb
+- test/redirect_to_test.rb
+- test/respond_to_test.rb
+- test/singleton_test.rb
 - test/test_helper.rb
+- test/url_helpers_test.rb

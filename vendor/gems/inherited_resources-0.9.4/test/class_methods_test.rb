@@ -20,21 +20,34 @@ end
 
 class SchoolsController < InheritedResources::Base
   has_scope :by_city
-  has_scope :featured, :boolean => true, :only => :index, :key => :by_featured
+  has_scope :featured, :boolean => true, :only => :index, :as => :by_featured
 end
 
 class DeansController < InheritedResources::Base
   belongs_to :school
 end
 
+class ActionsClassMethodTest < ActionController::TestCase
+  tests BooksController
 
-class ActionsClassMethodTest < ActiveSupport::TestCase
+  def test_cannot_render_actions
+    assert_raise ActionController::UnknownAction do
+      get :new
+    end
+  end
+
   def test_actions_are_undefined
-    action_methods = BooksController.send(:action_methods)
+    action_methods = BooksController.send(:action_methods).map(&:to_sym)
     assert_equal 2, action_methods.size
 
-    ['index', 'show'].each do |action|
-      assert action_methods.include? action
+    [:index, :show].each do |action|
+      assert action_methods.include?(action)
+    end
+
+    instance_methods = BooksController.send(:instance_methods).map(&:to_sym)
+
+    [:new, :edit, :create, :update, :destroy].each do |action|
+      assert !instance_methods.include?(action)
     end
   end
 
@@ -47,7 +60,6 @@ class ActionsClassMethodTest < ActiveSupport::TestCase
     end
   end
 end
-
 
 class DefaultsClassMethodTest < ActiveSupport::TestCase
   def test_resource_class_is_set_to_nil_when_resource_model_cannot_be_found
@@ -135,3 +147,4 @@ class HasScopeClassMethods < ActiveSupport::TestCase
     assert_equal config[:featured], { :as => :by_featured, :only => [ :index ], :except => [], :boolean => true }
   end
 end
+

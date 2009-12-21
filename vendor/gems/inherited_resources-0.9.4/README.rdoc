@@ -1,6 +1,6 @@
 Inherited Resources
 License: MIT
-Version: 0.9.1
+Version: 0.9.4
 
 == Description
 
@@ -9,7 +9,10 @@ all restful actions so you just have to focus on what is important. It makes
 your controllers more powerful and cleaner at the same time.
 
 Plus, making your controllers follow a pattern, it helps you to write better
-code by following fat models and skinny controllers convention.
+code by following fat models and skinny controllers convention. There is
+a screencast made by Fabio Akita about its features:
+
+http://akitaonrails.com/2009/09/01/screencast-real-thin-restful-controllers-with-inherited-resources
 
 Inherited Resources is tested and compatible with Rails 2.2.x and Rails 2.3.x.
 
@@ -20,12 +23,25 @@ keywords: resources, controller, singleton, belongs_to, polymorphic, named_scope
 Install Inherited Resources is very easy. It is stored in GitHub, so just run
 the following:
 
-    gem sources -a http://gems.github.com
-    sudo gem install josevalim-inherited_resources
+    gem sources -a http://gemcutter.org
+    sudo gem install inherited_resources
 
 If you want it as plugin, just do:
 
     script/plugin install git://github.com/josevalim/inherited_resources.git
+
+== Rspec known bug
+
+When used with integrate_views equals to false, rspec overwrites default_render,
+render and some other controller methods which makes Inherited Resources not work
+properly. In such cases, you have to set integrate_views to true.
+
+== Deprecation
+
+Since InheritedResouces 0.9.4, :notice and :error in I18n messages are deprecated in
+favor of :success and :failure. If you try to access them, a deprecation message is shown.
+If you want to skip the message, because you are sure you *won't* access such keys,
+just set DO_NOT_SET_NOTICE_MESSAGE to true somewhere in your app.
 
 == Basic Usage
 
@@ -117,7 +133,7 @@ projects collection:
     class ProjectsController < InheritedResources::Base
       protected
         def collection
-          @projects ||= end_of_association_chain.paginate(params[:page]).all
+          @projects ||= end_of_association_chain.paginate(:page => params[:page])
         end
     end
 
@@ -223,7 +239,7 @@ clean and organized inside the same action.
 
 For those DSL lovers, InheritedResources won't leave you alone. You can overwrite
 your success/failure blocks straight from your class binding. For it, you just
-need to add a DSL block to your application controller:
+need to add a DSL module to your application controller:
 
     class ApplicationController < ActionController::Base
       include InheritedResources::DSL
@@ -251,8 +267,8 @@ on projects controller, it will search for:
     flash.projects.create.status
     flash.actions.create.status
 
-The status can be :notice (when the object can be created, updated
-or destroyed with success) or :error (when the objecy cannot be created
+The status can be :success (when the object can be created, updated
+or destroyed with success) or :failure (when the objecy cannot be created
 or updated).
 
 Those messages are interpolated by using the resource class human name, which 
@@ -261,7 +277,7 @@ is also localized and it means you can set:
     flash:
       actions:
         create:
-          notice: "Hooray! {{resource_name}} was successfully created!"
+          success: "Hooray! {{resource_name}} was successfully created!"
 
 It will replace {{resource_name}} by the human name of the resource class,
 which is "Project" in this case.
@@ -272,7 +288,7 @@ the title of the project while updating a project. Well, that's easy also:
     flash:
       projects:
         update:
-          notice: "Hooray! The project "{{project_title}}" was updated!"
+          success: "Hooray! The project "{{project_title}}" was updated!"
 
 Since :project_title is not available for interpolation by default, you have
 to overwrite interpolation_options.
@@ -419,6 +435,9 @@ When using polymorphic associations, you get some free helpers:
     parent_class    #=> Task
     parent          #=> @task
 
+Right now, Inherited Resources is limited and does not allow you
+to have two polymorphic associations nested.
+
 == Optional belongs to
 
 Later you decide to create a view to show all comments, independent if they belong
@@ -505,8 +524,8 @@ associations, that relies on Rails polymorphic_url).
 
 == Bugs and Feedback
 
-If you discover any bugs, please send an e-mail to jose.valim@plataformatec.com.br
-If you just want to give some positive feedback or drop a line, that's fine too!
+If you discover any bugs or want to drop a line, join us in the mailing list:
 
-Copyright (c) 2009 José Valim<br />
-http://blog.plataformatec.com.br/
+http://groups.google.com/group/inherited_resources
+
+Copyright (c) 2009 José Valim http://blog.plataformatec.com.br
