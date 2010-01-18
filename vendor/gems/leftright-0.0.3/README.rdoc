@@ -1,0 +1,45 @@
+= leftright
+
+leftright is kind of like the redgreen gem. It makes passing tests look
+green, exceptions yellow, and failures red. But then there's more:
+
+  * It lets you know which TestCase class is being tested
+  * It shows you the full text of failures and exceptions as they happen
+  * It skips all remaining tests for a TestCase class if one fails
+
+== Dependencies
+
+Right now this is pretty heavily dependent on Test::Unit, so it won't work
+in Ruby 1.9+ using MiniTest. Support is planned as soon as I find myself
+using the Ruby 1.9 + Rails 3 combo day to day.
+
+== Installation instructions
+
+From Rubyforge's gem server (might not be there):
+
+  gem install leftright
+
+From Gemcutter:
+
+  gem install leftright --source http://gemcutter.org
+
+Both are the same, and are loaded the same way:
+
+  require 'leftright'
+
+== Example usage
+
+  require 'leftright'
+
+  class SomeTest < Test::Unit::TestCase
+    def test_that_true_is_indeed_true
+      assert_equal true, true
+    end
+  end
+
+Then run the file with ruby. Mind you, it gets a lot more exciting with
+your own tests, specially if they fail. :)
+
+== Legal
+
+Copyright (c) 2009 Jordi Bunster, released under the MIT license

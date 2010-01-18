@@ -6,3 +6,4 @@ public/system
 *.swp
 *.swo
 coverage/*
+rerun.txt

@@ -1,0 +1,63 @@
+--- !ruby/object:Gem::Specification 
+name: leftright
+version: !ruby/object:Gem::Version 
+  version: 0.0.3
+platform: ruby
+authors: 
+- Jordi Bunster
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2009-11-06 00:00:00 -05:00
+default_executable: 
+dependencies: []
+
+description: leftright is kind of like the redgreen gem. It makes passing tests look green, exceptions yellow, and failures red. It also has a few features that make your workflow a bit faster (see README).
+email: jordi@bunster.org
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- MIT-LICENSE
+- README.rdoc
+- WHATSNEW
+- leftright.gemspec
+- lib/leftright.rb
+- lib/leftright/autorun.rb
+- lib/leftright/color.rb
+- lib/leftright/runner.rb
+- lib/leftright/version.rb
+has_rdoc: true
+homepage: 
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 3
+summary: Cool replacement for Test::Unit's TestRunner
+test_files: []
+

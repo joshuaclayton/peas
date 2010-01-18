@@ -16,3 +16,4 @@ config.gem "factory_girl", :version => ">= 1.2.2"
 config.gem "database_cleaner", :version => ">=0.2.3"
 config.gem "rspec", :version => ">= 1.3.0", :lib => false
 config.gem "rspec-rails", :version => ">= 1.3.2", :lib => false
+config.gem "leftright", :version => ">= 0.0.3"
